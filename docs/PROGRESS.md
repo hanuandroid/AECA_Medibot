@@ -14,7 +14,7 @@
 | 10 SQL RAG | ✅ Done | `sql_rag_chain` 3 steps, validation, read-only exec, 1 repair retry | – | `test_sql_extract.py`, `test_sql_rag.py` | – | API |
 | 11 FastAPI | ✅ Done | 4 endpoints, denial UX, rerank details in response | – | `test_api.py` | – | Frontend |
 | 13 Next.js | ✅ Done | Login, chat, access sidebar, badges, citations, denial notice, rerank table | – | lint + typecheck + build | – | Tests |
-| 14–16 Tests / eval | ✅ Done | 210 backend tests; `docs/RAG_EVALUATION.md` | – | 210 passed | – | README |
+| 14–16 Tests / eval | ✅ Done | 217 backend tests; `docs/RAG_EVALUATION.md` | – | 217 passed | – | README |
 | 17 README | ✅ Done | Setup, architecture, RBAC, adversarial table + screenshots, hybrid/rerank/SQL sections with live outputs, substitutions | – | – | – | – |
 | 18 Compliance | ✅ Done | `docs/ASSIGNMENT_COMPLIANCE.md` | Public GitHub repo + submission (owner) | – | – | – |
 | 19 Final verification | ✅ Done | 217 passed (incl. 19 live LLM); ruff/format/mypy clean; frontend lint/typecheck/build; ingestion; live backend + UI via Playwright | – | 217/217 | – | Push to GitHub |
