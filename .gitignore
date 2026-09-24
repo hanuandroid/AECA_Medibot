@@ -37,3 +37,7 @@ backend/data/next.log
 
 # Local working notes (not part of the submission)
 prompt_doc/
+
+# Assignment brief (kept locally, not part of the submission)
+Medibot_Assignment_Instruction.md
+MediBot_Assignment_Instructions.pdf
