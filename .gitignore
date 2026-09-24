@@ -34,3 +34,6 @@ Thumbs.db
 # Runtime logs (the ingestion run log is kept as evidence)
 backend/data/uvicorn.log
 backend/data/next.log
+
+# Local working notes (not part of the submission)
+prompt_doc/
