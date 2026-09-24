@@ -1,7 +1,7 @@
 # Assignment Compliance
 
 Mapped against `Medibot_Assignment_Instruction.md`. Evidence = a test in `backend/tests` (last full
-run: **210 passed, 0 skipped**, including 17 live-LLM tests with `gpt-4o-mini`) or a recorded run
+run: **217 passed, 0 skipped**, including 19 live-LLM tests with `gpt-4o-mini`) or a recorded run
 artifact. Status: PASS / PARTIAL / FAIL.
 
 ## RBAC at the vector store retrieval layer — 25%
@@ -47,7 +47,7 @@ artifact. Status: PASS / PARTIAL / FAIL.
 | Step 1 LLM → SQL | `generate_sql` | `app/sql_rag/chain.py` | live tests | PASS |
 | Step 2 clean output → SQL only | `extract_sql` + `validate_sql` (read-only) | `app/sql_rag/extract.py`, `validate.py` | `test_sql_extract.py` (11 formats, 15 unsafe statements) | PASS |
 | Step 3 execute, pass result to LLM → answer | `execute_readonly` (mode=ro, query_only) + `answer_from_result` | `app/sql_rag/executor.py`, `chain.py` | `test_three_steps_with_fenced_llm_output`, `test_executor_is_read_only_even_if_validation_bypassed` | PASS |
-| Works for ≥4 analytical questions | — | — | `test_sql_rag_live_llm` × 6 (real LLM, compared with reference SQL) + `test_sql_rag_chain_returns_string_live`; outputs in README | PASS |
+| Works for ≥4 analytical questions | — | — | `test_sql_rag_live_llm` × 8 (real LLM, compared with reference SQL) + `test_sql_rag_chain_returns_string_live`; outputs in README | PASS |
 | Only billing_executive and admin | `can_use_sql` gate | `app/rbac.py`, `app/api/chat_service.py` | `test_chat_sql_denied_for_non_analytical_roles`, `test_chat_sql_rag_for_permitted_roles` | PASS |
 
 ## FastAPI backend — 10%

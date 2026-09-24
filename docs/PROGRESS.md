@@ -17,8 +17,15 @@
 | 14–16 Tests / eval | ✅ Done | 210 backend tests; `docs/RAG_EVALUATION.md` | – | 210 passed | – | README |
 | 17 README | ✅ Done | Setup, architecture, RBAC, adversarial table + screenshots, hybrid/rerank/SQL sections with live outputs, substitutions | – | – | – | – |
 | 18 Compliance | ✅ Done | `docs/ASSIGNMENT_COMPLIANCE.md` | Public GitHub repo + submission (owner) | – | – | – |
-| 19 Final verification | ✅ Done | 210 passed (incl. 17 live LLM); ruff/format/mypy clean; frontend lint/typecheck/build; ingestion; live backend + UI via Playwright | – | 210/210 | – | Push to GitHub |
+| 19 Final verification | ✅ Done | 217 passed (incl. 19 live LLM); ruff/format/mypy clean; frontend lint/typecheck/build; ingestion; live backend + UI via Playwright | – | 217/217 | – | Push to GitHub |
 
 LLM key blocker resolved 2026-09-24 (valid OpenAI key; `gpt-4o-mini`). Two live SQL tests initially
 failed only on answer wording ("Orthopaedics" vs "orthopaedics", "No claims" for 0) — the SQL
 results were correct; the text match was made case-insensitive and accepts no/none/zero for 0.
+
+**Cross-verification against the assignment (2026-09-24):** 20 end-to-end scenarios traced to
+specific assignment lines (security example, IV cannula, both SQL examples, patient category
+counts, admin access to all 5 collections, SQL denial for doctor/technician, …) all passed with the
+real LLM. The run exposed an intermittent bug — the LLM read "last month" as the as-of month — which
+the zero-valued reference question could not detect. Fixed by computing date windows in Python
+(`relative_date_windows`) and adding discriminating regression tests (9 vs 4, 7 vs 9).

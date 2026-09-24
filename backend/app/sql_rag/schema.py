@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sqlite3
+from datetime import date, timedelta
 from functools import lru_cache
 from pathlib import Path
 
@@ -86,3 +87,30 @@ def latest_date(db_path: Path | None = None) -> str:
 def as_of_date() -> str:
     configured = get_settings().sql_as_of_date.strip()
     return configured or latest_date()
+
+
+def _month_start(d: date, offset: int = 0) -> date:
+    """First day of the month ``offset`` months away from ``d``'s month."""
+    index = d.year * 12 + (d.month - 1) + offset
+    return date(index // 12, index % 12 + 1, 1)
+
+
+def relative_date_windows(as_of: str) -> str:
+    """Exact half-open date ranges for relative expressions, computed in Python.
+
+    The LLM is given these literal ranges instead of doing calendar arithmetic itself
+    (it was observed to read "last month" as the as-of month).
+    """
+    d = date.fromisoformat(as_of)
+    windows = {
+        "today": (d, d + timedelta(days=1)),
+        "this month": (_month_start(d), _month_start(d, 1)),
+        "last month": (_month_start(d, -1), _month_start(d)),
+        "this year": (date(d.year, 1, 1), date(d.year + 1, 1, 1)),
+        "last year": (date(d.year - 1, 1, 1), date(d.year, 1, 1)),
+        "last 30 days": (d - timedelta(days=29), d + timedelta(days=1)),
+    }
+    return "\n".join(
+        f"  - {name}: date >= '{start.isoformat()}' AND date < '{end.isoformat()}'"
+        for name, (start, end) in windows.items()
+    )

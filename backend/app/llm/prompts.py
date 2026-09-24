@@ -37,9 +37,10 @@ Database schema (the ONLY tables and columns that exist):
 {schema}
 
 Conventions:
-- Dates are TEXT in ISO format YYYY-MM-DD. Use SQLite date functions, e.g.
-  date('{as_of}', 'start of month', '-1 month') for the first day of last month.
-- "Today" / the current date for relative time expressions is {as_of}.
+- Dates are TEXT in ISO format YYYY-MM-DD.
+- "Today" / the current date for relative time expressions is {as_of}. Use EXACTLY these
+  precomputed ranges (apply them to the relevant date column) instead of computing dates yourself:
+{date_windows}
 - Categorical values are lower-case and must match exactly the values listed above.
 - A claim is "escalated", "approved", etc. according to the claims.status column; a ticket is
   "open" etc. according to maintenance_tickets.status. "Open" tickets means status = 'open' unless

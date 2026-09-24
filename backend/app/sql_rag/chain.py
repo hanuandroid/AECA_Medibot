@@ -26,7 +26,7 @@ from app.llm.prompts import (
 )
 from app.sql_rag.executor import QueryResult, SQLExecutionError, execute_readonly
 from app.sql_rag.extract import SQLExtractionError, extract_sql
-from app.sql_rag.schema import as_of_date, describe_schema
+from app.sql_rag.schema import as_of_date, describe_schema, relative_date_windows
 from app.sql_rag.validate import SQLValidationError, validate_sql
 
 logger = logging.getLogger(__name__)
@@ -50,7 +50,10 @@ class SQLRagResult:
 
 def generate_sql(question: str, llm: LLMClient, feedback: str = "") -> str:
     """Step 1: natural language -> raw LLM output (expected to contain SQL)."""
-    system = SQL_GENERATION_SYSTEM_PROMPT.format(schema=describe_schema(), as_of=as_of_date())
+    as_of = as_of_date()
+    system = SQL_GENERATION_SYSTEM_PROMPT.format(
+        schema=describe_schema(), as_of=as_of, date_windows=relative_date_windows(as_of)
+    )
     user = SQL_GENERATION_USER_TEMPLATE.format(question=question, feedback=feedback)
     return llm.complete(system, user, max_tokens=500)
 

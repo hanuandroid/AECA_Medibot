@@ -10,7 +10,7 @@ import pytest
 from app.sql_rag import chain
 from app.sql_rag.chain import SQLRagError, run_sql_rag, sql_rag_chain
 from app.sql_rag.executor import execute_readonly
-from app.sql_rag.schema import as_of_date, describe_schema
+from app.sql_rag.schema import as_of_date, describe_schema, relative_date_windows
 
 from .conftest import StubLLM
 
@@ -125,7 +125,43 @@ REFERENCE = [
         "date('2024-12-28', 'start of month')",
         0,
     ),
+    # Relative-date questions whose answers differ between November (last month) and December
+    # (this month), so reading "last month" as the as-of month is caught (regression).
+    (
+        "How many claims were submitted last month?",
+        "SELECT COUNT(*) FROM claims WHERE submitted_date >= '2024-11-01' "
+        "AND submitted_date < '2024-12-01'",
+        9,
+    ),
+    (
+        "How many maintenance tickets were raised this month?",
+        "SELECT COUNT(*) FROM maintenance_tickets WHERE raised_date >= '2024-12-01' "
+        "AND raised_date < '2025-01-01'",
+        7,
+    ),
 ]
+
+
+@pytest.mark.parametrize(
+    ("as_of", "last_month", "this_month"),
+    [
+        ("2024-12-28", ("2024-11-01", "2024-12-01"), ("2024-12-01", "2025-01-01")),
+        ("2024-01-15", ("2023-12-01", "2024-01-01"), ("2024-01-01", "2024-02-01")),
+    ],
+)
+def test_relative_date_windows(
+    as_of: str, last_month: tuple[str, str], this_month: tuple[str, str]
+) -> None:
+    windows = relative_date_windows(as_of)
+    assert f"last month: date >= '{last_month[0]}' AND date < '{last_month[1]}'" in windows
+    assert f"this month: date >= '{this_month[0]}' AND date < '{this_month[1]}'" in windows
+
+
+def test_sql_prompt_contains_precomputed_date_windows() -> None:
+    llm = StubLLM("SELECT 1 FROM claims", "ok")
+    run_sql_rag("How many claims were submitted last month?", llm=llm)
+    system_prompt, _ = llm.calls[0]
+    assert "last month: date >= '2024-11-01' AND date < '2024-12-01'" in system_prompt
 
 
 @pytest.mark.parametrize(("question", "sql", "expected"), REFERENCE)
