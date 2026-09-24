@@ -1,0 +1,55 @@
+2026-09-23 23:21:42,299 INFO app.ingestion: Found 12 documents under E:\codebasics\code\Medibot_Assignment\mediassist_data
+2026-09-23 23:21:42,300 INFO app.ingestion.parser: Parsing billing_codes.pdf with Docling
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-23 23:22:31,904 WARNING huggingface_hub.utils._http: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-23 23:22:33,051 INFO app.ingestion.chunker: billing_codes.pdf: 20 chunks
+2026-09-23 23:22:33,051 INFO app.ingestion: billing_codes.pdf            billing     20 chunks (50.8s)
+2026-09-23 23:22:33,052 INFO app.ingestion.parser: Parsing claim_submission_guide.md with Docling
+2026-09-23 23:22:33,338 INFO app.ingestion.chunker: claim_submission_guide.md: 35 chunks
+2026-09-23 23:22:33,338 INFO app.ingestion: claim_submission_guide.md    billing     35 chunks (0.3s)
+2026-09-23 23:22:33,338 INFO app.ingestion.parser: Parsing diagnostic_reference.pdf with Docling
+2026-09-23 23:23:10,600 INFO app.ingestion.chunker: diagnostic_reference.pdf: 14 chunks
+2026-09-23 23:23:10,600 INFO app.ingestion: diagnostic_reference.pdf     clinical    14 chunks (37.3s)
+2026-09-23 23:23:10,601 INFO app.ingestion.parser: Parsing drug_formulary.pdf with Docling
+2026-09-23 23:23:58,960 INFO app.ingestion.chunker: drug_formulary.pdf: 19 chunks
+2026-09-23 23:23:58,960 INFO app.ingestion: drug_formulary.pdf           clinical    19 chunks (48.4s)
+2026-09-23 23:23:58,961 INFO app.ingestion.parser: Parsing treatment_protocols.pdf with Docling
+2026-09-23 23:24:34,920 INFO app.ingestion.chunker: treatment_protocols.pdf: 46 chunks
+2026-09-23 23:24:34,920 INFO app.ingestion: treatment_protocols.pdf      clinical    46 chunks (36.0s)
+2026-09-23 23:24:34,921 INFO app.ingestion.parser: Parsing equipment_manual.pdf with Docling
+2026-09-23 23:25:14,165 INFO app.ingestion.chunker: equipment_manual.pdf: 40 chunks
+2026-09-23 23:25:14,166 INFO app.ingestion: equipment_manual.pdf         equipment   40 chunks (39.2s)
+2026-09-23 23:25:14,166 INFO app.ingestion.parser: Parsing code_of_conduct.pdf with Docling
+2026-09-23 23:25:22,318 INFO app.ingestion.chunker: code_of_conduct.pdf: 20 chunks
+2026-09-23 23:25:22,318 INFO app.ingestion: code_of_conduct.pdf          general     20 chunks (8.2s)
+2026-09-23 23:25:22,319 INFO app.ingestion.parser: Parsing general_faqs.pdf with Docling
+2026-09-23 23:25:30,667 INFO app.ingestion.chunker: general_faqs.pdf: 32 chunks
+2026-09-23 23:25:30,667 INFO app.ingestion: general_faqs.pdf             general     32 chunks (8.3s)
+2026-09-23 23:25:30,668 INFO app.ingestion.parser: Parsing leave_policy.pdf with Docling
+2026-09-23 23:25:43,460 INFO app.ingestion.chunker: leave_policy.pdf: 15 chunks
+2026-09-23 23:25:43,460 INFO app.ingestion: leave_policy.pdf             general     15 chunks (12.8s)
+2026-09-23 23:25:43,461 INFO app.ingestion.parser: Parsing staff_handbook.pdf with Docling
+2026-09-23 23:25:55,998 INFO app.ingestion.chunker: staff_handbook.pdf: 28 chunks
+2026-09-23 23:25:55,998 INFO app.ingestion: staff_handbook.pdf           general     28 chunks (12.5s)
+2026-09-23 23:25:55,999 INFO app.ingestion.parser: Parsing icu_nursing_procedures.pdf with Docling
+2026-09-23 23:26:19,320 INFO app.ingestion.chunker: icu_nursing_procedures.pdf: 39 chunks
+2026-09-23 23:26:19,320 INFO app.ingestion: icu_nursing_procedures.pdf   nursing     39 chunks (23.3s)
+2026-09-23 23:26:19,321 INFO app.ingestion.parser: Parsing infection_control.pdf with Docling
+2026-09-23 23:26:37,713 INFO app.ingestion.chunker: infection_control.pdf: 21 chunks
+2026-09-23 23:26:37,713 INFO app.ingestion: infection_control.pdf        nursing     21 chunks (18.4s)
+2026-09-23 23:26:37,713 INFO app.retrieval.qdrant_store: Using Qdrant server at http://localhost:6333
+2026-09-23 23:26:38,131 INFO app.retrieval.embeddings: Loading dense embedding model BAAI/bge-small-en-v1.5
+  warnings.warn(message)
+  warnings.warn(message)
+2026-09-23 23:27:18,559 INFO app.retrieval.embeddings: Loading sparse (BM25) model Qdrant/bm25
+  warnings.warn(message)
+2026-09-23 23:27:20,737 INFO app.ingestion.indexer: Indexed 64/329 chunks
+2026-09-23 23:27:36,148 INFO app.ingestion.indexer: Indexed 128/329 chunks
+2026-09-23 23:27:46,771 INFO app.ingestion.indexer: Indexed 192/329 chunks
+2026-09-23 23:27:59,722 INFO app.ingestion.indexer: Indexed 256/329 chunks
+2026-09-23 23:28:07,975 INFO app.ingestion.indexer: Indexed 320/329 chunks
+2026-09-23 23:28:08,711 INFO app.ingestion.indexer: Indexed 329/329 chunks
+2026-09-23 23:28:08,741 INFO app.ingestion: Indexed 329 chunks into 'medibot_chunks'
+2026-09-23 23:28:08,741 INFO app.ingestion: Chunks per collection: {'billing': 55, 'clinical': 79, 'equipment': 40, 'general': 95, 'nursing': 60}
+2026-09-23 23:28:08,741 INFO app.ingestion: Chunks per type: {'text': 187, 'table': 65, 'heading': 72, 'code': 5}
+2026-09-23 23:28:08,741 INFO app.ingestion: Chunk preview written to E:\codebasics\code\Medibot_Assignment\backend\data\chunks_preview.jsonl
